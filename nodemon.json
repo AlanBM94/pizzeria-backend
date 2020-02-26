@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DB_USER": "Alan",
+    "DB_PASSWORD": "pizzeria-mern-1994",
+    "DB_NAME": "pizzeria",
+    "JWT_KEY": "desarrolloweb0810SCG1993",
+    "JWT_EXPIRES_IN": "90d"
+  }
+}
