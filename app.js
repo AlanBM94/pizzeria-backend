@@ -7,6 +7,7 @@ const HttpError = require("./models/http-error");
 const userRoutes = require("./routes/userRoutes");
 const foodRoutes = require("./routes/foodRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const pizzaShopRoutes = require("./routes/pizzaShopRoutes");
 
 const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-qwvpk.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 app.use("/api/users", userRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/pizzaShops", pizzaShopRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
