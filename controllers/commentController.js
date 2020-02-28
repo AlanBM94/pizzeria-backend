@@ -7,10 +7,10 @@ exports.setFoodUserIds = (req, res, next) => {
   next();
 };
 
-const findFoodComment = async (food, next) => {
+const findFoodComment = async (food, user, next) => {
   let foodComment;
   try {
-    foodComment = await Comment.findOne({ food: food });
+    foodComment = await Comment.findOne({ food: food, user: user });
   } catch (error) {
     return next(new HttpError("Could not create a comment", 500));
   }
@@ -20,7 +20,7 @@ const findFoodComment = async (food, next) => {
 module.exports.createComment = async (req, res, next) => {
   const { comment, user, food } = req.body;
   let newComment;
-  const existingFoodComment = await findFoodComment(food);
+  const existingFoodComment = await findFoodComment(food, user, next);
 
   if (existingFoodComment) {
     return next(new HttpError("You only can create a comment per food", 401));

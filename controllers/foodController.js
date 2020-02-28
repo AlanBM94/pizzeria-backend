@@ -4,9 +4,9 @@ const { validationResult } = require("express-validator");
 
 module.exports.findFood = async (req, res, next) => {
   const categorySelected = req.params.category;
-  let foods;
+  let food;
   try {
-    foods = await Food.find({ category: categorySelected });
+    food = await Food.find({ category: categorySelected });
   } catch (error) {
     return next(
       new HttpError("Could not find any food, please try again later", 500)
@@ -14,7 +14,7 @@ module.exports.findFood = async (req, res, next) => {
   }
 
   res.status(200).json({
-    foods: foods
+    food
   });
 };
 
@@ -45,14 +45,14 @@ const checkIfFoodAlreadyExists = async (title, next) => {
 };
 
 module.exports.createFood = async (req, res, next) => {
-  const { title, description, category, image } = req.body;
+  const { title, description, category } = req.body;
   await checkIfFoodAlreadyExists(title, next);
 
   const newFood = new Food({
     title,
     description,
     category,
-    image
+    image: req.file.path
   });
 
   try {

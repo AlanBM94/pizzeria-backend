@@ -1,23 +1,30 @@
 const express = require("express");
 const commentController = require("../controllers/commentController");
-const userController = require("../controllers/userController");
+const authorization = require("../middleware/auth");
 
 const route = express.Router();
 
 route.get("/:foodId", commentController.findCommentsByFood);
 
-route.use(userController.protect);
-
-route.get("/", commentController.findCommentsByUser);
+route.get("/", authorization.protect, commentController.findCommentsByUser);
 
 route.post(
   "/",
+  authorization.protect,
   commentController.setFoodUserIds,
   commentController.createComment
 );
 
-route.patch("/:commentId", commentController.updateComment);
+route.patch(
+  "/:commentId",
+  authorization.protect,
+  commentController.updateComment
+);
 
-route.delete("/:commentId", commentController.deleteComment);
+route.delete(
+  "/:commentId",
+  authorization.protect,
+  commentController.deleteComment
+);
 
 module.exports = route;

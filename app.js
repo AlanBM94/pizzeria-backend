@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
-
+const path = require("path");
+const HttpError = require("./models/http-error");
 const userRoutes = require("./routes/userRoutes");
 const foodRoutes = require("./routes/foodRoutes");
 const commentRoutes = require("./routes/commentRoutes");
@@ -17,6 +18,8 @@ const config = {
 
 app.use(bodyParser.json());
 
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -29,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/users", userRoutes);
-app.use("/api/foods", foodRoutes);
+app.use("/api/food", foodRoutes);
 app.use("/api/comments", commentRoutes);
 
 app.use((req, res, next) => {
