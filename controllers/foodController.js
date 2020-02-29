@@ -18,18 +18,6 @@ module.exports.findFood = async (req, res, next) => {
   });
 };
 
-module.exports.validateFoodBody = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors);
-    return next(
-      new HttpError("Invalid inputs passed, please check your data.", 422)
-    );
-  } else {
-    return next();
-  }
-};
-
 const checkIfFoodAlreadyExists = async (title, next) => {
   let existingFood;
   try {

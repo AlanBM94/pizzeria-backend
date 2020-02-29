@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
+const validation = require("../middleware/validateBody");
 
 const usersController = require("../controllers/userController");
 
@@ -15,7 +16,7 @@ router.post(
       .isEmail(),
     check("password").isLength({ min: 8 })
   ],
-  usersController.validateBody,
+  validation.validateBody,
   usersController.signUp
 );
 

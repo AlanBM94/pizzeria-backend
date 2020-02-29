@@ -1,6 +1,6 @@
 const PizzaShop = require("../models/pizzaShopModel");
 const HttpError = require("../models/http-error");
-const getCoordsForAddress = require("../utils/location");
+const { validationResult } = require("express-validator");
 
 module.exports.getPizzaShops = async (req, res, next) => {
   try {

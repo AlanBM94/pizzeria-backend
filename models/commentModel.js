@@ -5,7 +5,8 @@ const commentSchema = mongoose.Schema(
     comment: {
       type: String,
       required: true,
-      minLenght: 10
+      minLenght: 10,
+      maxLength: 120
     },
     date: {
       type: Date,

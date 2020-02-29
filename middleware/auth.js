@@ -33,7 +33,6 @@ exports.protect = async (req, res, next) => {
   try {
     currentUser = await User.findOne({ email: decoded.email });
   } catch (error) {
-    console.log(error);
     return next(new HttpError("Could not find a user with that id", 500));
   }
 

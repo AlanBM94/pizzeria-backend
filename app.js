@@ -8,14 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const foodRoutes = require("./routes/foodRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const pizzaShopRoutes = require("./routes/pizzaShopRoutes");
-
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-qwvpk.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
-
-const config = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-};
+const reservationRoutes = require("./routes/reservationRoutes");
 
 app.use(bodyParser.json());
 
@@ -36,6 +29,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/food", foodRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/pizzaShops", pizzaShopRoutes);
+app.use("/api/reservations", reservationRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
@@ -43,6 +37,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+  console.log(error);
   if (res.headerSent) {
     return next(error);
   }
@@ -50,6 +45,14 @@ app.use((error, req, res, next) => {
     .status(error.code || 500)
     .json({ message: error.message || "An unknown error ocurred!" });
 });
+
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0-qwvpk.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
+const config = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+};
 
 mongoose
   .connect(url, config)
